@@ -1,7 +1,5 @@
-<?php namespace App\Console\Commands\GDocuments;
+<?php namespace Modules\CupGdocs\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Storage;
 
 

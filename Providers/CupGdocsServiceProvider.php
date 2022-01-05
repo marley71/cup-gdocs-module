@@ -34,7 +34,9 @@ class CupGdocsServiceProvider extends ServiceProvider
     }
 
     public function registerCommands() {
-
+        $this->publishes([
+            module_path('CupGdocs', 'app/Console/Commands') => app_path('Console/Commands')
+        ],"commands");
     }
 
 
