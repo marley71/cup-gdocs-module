@@ -1,0 +1,13 @@
+{
+    "name": "CupGdocs",
+    "alias": "cup-gdocs",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\CupGdocs\\Providers\\CupGdocsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
