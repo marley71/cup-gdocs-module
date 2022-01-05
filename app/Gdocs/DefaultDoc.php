@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Gdocs;
 
 
 class DefaultDoc extends \Modules\CupGdocs\Gdocs\DefaultDoc

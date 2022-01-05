@@ -374,9 +374,9 @@ class GCommon extends Command
     protected function getClientOAuth()
     {
         $client = new \Google_Client();
-        $client->setApplicationName('Affitti');
+        $client->setApplicationName('Gdocs');
         $client->setScopes([\Google_Service_Drive::DRIVE, \Google_Service_Drive::DRIVE_FILE, \Google_Service_Drive::DRIVE_READONLY]);
-        $client->setAuthConfig(env('OAUTH_JSON'));
+        $client->setAuthConfig(config('cupparis-gdocs.secret_json_path'));
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
 
