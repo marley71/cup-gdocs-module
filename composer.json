@@ -1,0 +1,38 @@
+{
+    "name": "marley71/cup-gdocs-module",
+    "type": "laravel-module",
+    "description": "Pacchetto per la gestione di documenti appoggiandosi alle api google documents",
+    "keywords": ["laravel", "google documents"],
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/gecche/geo-shapes"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Pier Paolo Ciullo",
+            "email": "ciullo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "laravel/framework": "^6.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\CupChart\\Providers\\CupGdocsServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\CupGdocs\\": ""
+        }
+    }
+}
