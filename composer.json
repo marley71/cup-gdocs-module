@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\CupChart\\Providers\\CupGdocsServiceProvider"
+                "Modules\\CupGdocs\\Providers\\CupGdocsServiceProvider"
             ],
             "aliases": {
 
