@@ -15,8 +15,11 @@ class CupGdocsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerCommands();
+        $this->registerConfig();
+        $this->registerGdocs();
+
 //        $this->registerTranslations();
-//        $this->registerConfig();
+
 //        $this->registerViews();
 //        $this->registerFactories();
 //        $this->loadMigrationsFrom(module_path('CupGdocs', 'Database/Migrations'));
@@ -39,6 +42,12 @@ class CupGdocsServiceProvider extends ServiceProvider
         ],"commands");
     }
 
+
+    public function registerGdocs() {
+        $this->publishes([
+            module_path('CupGdocs', 'app/Gdocs') => app_path('Gdocs')
+        ],"gdocs");
+    }
 
     /**
      * Register translations.
