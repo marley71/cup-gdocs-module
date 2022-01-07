@@ -22,7 +22,7 @@ class CupGdocsServiceProvider extends ServiceProvider
 
 //        $this->registerViews();
 //        $this->registerFactories();
-//        $this->loadMigrationsFrom(module_path('CupGdocs', 'Database/Migrations'));
+        $this->loadMigrationsFrom(module_path('CupGdocs', 'Database/Migrations'));
 //        $this->cupparisPublish();
     }
 

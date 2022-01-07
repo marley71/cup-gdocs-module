@@ -40,7 +40,7 @@ class DefaultDoc extends \Modules\CupGdocs\Gdocs\DefaultDoc
             ],
         ];
 
-        $this->data['esempio-inline'] = [
+        $this->data['esempio-table'] = [
             [
                 'campo1' => 'campo1 a',
                 'campo2' => 'campo2 a',
@@ -58,10 +58,5 @@ class DefaultDoc extends \Modules\CupGdocs\Gdocs\DefaultDoc
                 'campo3' => '66666'
             ],
         ];
-    }
-
-    function export()
-    {
-        // TODO: Implement export() method.
     }
 }
