@@ -14,7 +14,7 @@ class CupGdocsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerCommands();
+        $this->registerCommands(); 
         $this->registerConfig();
         $this->registerGdocs();
 
