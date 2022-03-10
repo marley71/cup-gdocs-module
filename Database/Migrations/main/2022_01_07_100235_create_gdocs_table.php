@@ -15,11 +15,11 @@ class CreateGdocsTable extends Migration {
 	{
 		Schema::create('gdocs', function(Blueprint $table)
 		{
-            			$table->increments('id');
+            $table->id('id');
 			$table->string('gdoc_id')->nullable();
 			$table->string('nome')->nullable();
 			$table->text('descrizione')->nullable();
-			$table->test('tipo')->default('default_doc');
+			$table->string('tipo')->default('default_doc');
 		});
 	}
 
