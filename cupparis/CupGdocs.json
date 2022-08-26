@@ -1,0 +1,46 @@
+{
+    "foorm": {
+        "entities": [
+            "cup_gdocs_docs"
+        ]
+    },
+    "modelconfs": {
+        "files": [
+                "M_Gdoc.js"
+        ]
+    },
+    "permissions": {
+        "models": [
+
+        ],
+        "other_permissions": {
+            "web": [
+            ]
+        }
+    },
+    "policies": {
+        "models": {
+        }
+    },
+    "models": [
+
+    ],
+    "datafile-models": [
+
+    ],
+    "datafile-providers": [
+
+    ],
+
+    "config": [
+        "cupgdocs"
+    ],
+
+    "public": [
+        "admin/ModelConfs/M_Gdoc.js"
+
+    ],
+    "install": [
+
+    ]
+}

@@ -11,7 +11,7 @@ class GTest extends Command
      *
      * @var string
      */
-    protected $signature = 'gdocs:test  {google_doc_id: esegue il dump del documento google}';
+    protected $signature = 'gdocs:test {google_doc_id : esegue il dump del documento google}';
 
     /**
      * The console command description.
@@ -28,7 +28,7 @@ class GTest extends Command
     public function handle()
     {
         $doc = new DefaultDoc();
-        $id = '1eX8UxLViSjBJwmbDb1vak17zxINfq7jnVAdlavq8dV0';
+        //$id = '1eX8UxLViSjBJwmbDb1vak17zxINfq7jnVAdlavq8dV0';
         $id = $this->argument('google_doc_id');
         $doc->export($id,storage_path('prova.docx'));
     }

@@ -20,6 +20,8 @@ class CreateGdocsTable extends Migration {
 			$table->string('nome')->nullable();
 			$table->text('descrizione')->nullable();
 			$table->string('tipo')->default('default_doc');
+            $table->nullableTimestamps();
+            $table->nullableOwnerships();
 		});
 	}
 

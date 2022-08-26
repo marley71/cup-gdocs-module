@@ -19,14 +19,14 @@ abstract class DefaultDoc implements GdocsInterface {
 
     public function export($googleId, $filepath)
     {
-        $this->loadData();
+        //$this->loadData();
         $this->getClientOAuth();
         $this->body = $this->getDocumentBody($googleId);
         $this->loadData();
         $content = $this->trasform();
         $fileTmp = $this->_export($content);
         $this->save($fileTmp->id,$filepath);
-        //$this->deleteGoogleDoc($fileTmp->id);
+        $this->deleteGoogleDoc($fileTmp->id);
     }
 
 
@@ -58,7 +58,7 @@ abstract class DefaultDoc implements GdocsInterface {
     protected function trasform()
     {
         $data = $this->data;
-        \Log::info('found Blocks....');
+        \Log::info('found Blocks....kkk');
         while ($this->foundBlock($data)) {}
         $data_dot = Arr::dot($data);
         file_put_contents(storage_path('blocchi_srotolati.html'), $this->body . "\n");
@@ -74,6 +74,7 @@ abstract class DefaultDoc implements GdocsInterface {
             $key = $matches[0];
             $realKey = str_replace('}}}', '', str_replace('{{{', '', $key));
             $endKey = str_replace('{{{', '{{{/', $key);
+            \Log::info("key $key realKey $realKey endKey $endKey");
             $posStart = strpos($body, $key) + strlen($key);
             $posEnd = strpos($body, $endKey);
 
@@ -186,6 +187,7 @@ abstract class DefaultDoc implements GdocsInterface {
                 $offset = strpos($body, $key);
                 $realKey = str_replace('}}', '', str_replace('{{', '', $key));
                 \Log::info("key $key realKey $realKey");
+                //\Log::info(print_r($data,true));
                 $body = str_replace($key, $data[$realKey], $body);
             } else {
                 $stop = true;
