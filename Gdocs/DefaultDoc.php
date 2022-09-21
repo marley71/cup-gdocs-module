@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Modules\CupGdocs\Contracts\GdocsInterface;
 
 abstract class DefaultDoc implements GdocsInterface {
@@ -11,10 +13,15 @@ abstract class DefaultDoc implements GdocsInterface {
     protected $data = [];
     protected $client = null;
     protected $body = '';
+    protected $dataKeys = [];
 
     public function __construct($params = [])
     {
         $this->params = $params;
+    }
+
+    public function setDataKeys($dK) {
+        $this->dataKeys = $dK;
     }
 
     public function export($googleId, $filepath)
@@ -180,15 +187,34 @@ abstract class DefaultDoc implements GdocsInterface {
         $stop = false;
         $offset = 0;
         $body = $this->body;
+        //$configKeys = $this->dataKeys; //['order.receipt_id'];
         while (!$stop) {
             //echo "offset $offset\n";
             if (preg_match('/{{.+?}}/', $body, $matches, 0, $offset)) {
                 $key = $matches[0];
                 $offset = strpos($body, $key);
                 $realKey = str_replace('}}', '', str_replace('{{', '', $key));
+
                 \Log::info("key $key realKey $realKey");
+
+                $trovato = false;
+                foreach ($this->dataKeys as $configKey) {
+                    if (Str::contains($realKey,$configKey)) {
+
+
+                        $realKey = str_replace($configKey,$data[$configKey],$realKey);
+                        $body = str_replace($key,$realKey,$body);
+
+                        $trovato = true;
+                        break;
+                    }
+                }
+
+                if (!$trovato) {
                 //\Log::info(print_r($data,true));
+
                 $body = str_replace($key, $data[$realKey], $body);
+                }
             } else {
                 $stop = true;
             }
@@ -462,5 +488,6 @@ abstract class DefaultDoc implements GdocsInterface {
         $service = new \Google_Service_Drive($this->client);
         $service->files->delete($fileId);
     }
+
 }
 
