@@ -24,6 +24,10 @@ abstract class DefaultDoc implements GdocsInterface {
         $this->dataKeys = $dK;
     }
 
+    public function loadData() {
+
+    }
+
     public function export($googleId, $filepath)
     {
         //$this->loadData();
@@ -36,8 +40,21 @@ abstract class DefaultDoc implements GdocsInterface {
         $this->deleteGoogleDoc($fileTmp->id);
     }
 
+    public function exportFromHtml($body, $filepath)
+    {
+        //$this->loadData();
+        $this->getClientOAuth();
+        $this->body = $body; //$this->getDocumentBody($googleId);
+        $this->loadData();
+        $content = $this->trasform();
+        $fileTmp = $this->_export($content);
+        $this->save($fileTmp->id,$filepath);
+        $this->deleteGoogleDoc($fileTmp->id);
+    }
 
-
+    public function getData() {
+        return $this->data;
+    }
     protected function save($fileId, $filePath)
     {
         $service = new \Google_Service_Drive($this->client);
@@ -488,6 +505,7 @@ abstract class DefaultDoc implements GdocsInterface {
         $service = new \Google_Service_Drive($this->client);
         $service->files->delete($fileId);
     }
+
 
 }
 
