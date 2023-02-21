@@ -35,6 +35,9 @@ abstract class DefaultDoc implements GdocsInterface {
         $this->body = $this->getDocumentBody($googleId);
         $this->loadData();
         $content = $this->trasform();
+        file_put_contents(storage_path('blocchi_trasformati1.html'), $content . "\n");
+        die('aa');
+        Log::info($content);
         $fileTmp = $this->_export($content);
         $this->save($fileTmp->id,$filepath);
         $this->deleteGoogleDoc($fileTmp->id);
@@ -47,6 +50,9 @@ abstract class DefaultDoc implements GdocsInterface {
         $this->body = $body; //$this->getDocumentBody($googleId);
         $this->loadData();
         $content = $this->trasform();
+        file_put_contents(storage_path('blocchi_trasformati2.html'), $content . "\n");
+        die(' bb');
+        Log::info($content);
         $fileTmp = $this->_export($content);
         $this->save($fileTmp->id,$filepath);
         $this->deleteGoogleDoc($fileTmp->id);
