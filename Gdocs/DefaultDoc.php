@@ -33,11 +33,11 @@ abstract class DefaultDoc implements GdocsInterface {
         //$this->loadData();
         $this->getClientOAuth();
         $this->body = $this->getDocumentBody($googleId);
-        $this->loadData();
+        if (count($this->data) == 0) {
+            $this->loadData();
+        }
         $content = $this->trasform();
         file_put_contents(storage_path('blocchi_trasformati1.html'), $content . "\n");
-        die('aa');
-        Log::info($content);
         $fileTmp = $this->_export($content);
         $this->save($fileTmp->id,$filepath);
         $this->deleteGoogleDoc($fileTmp->id);
