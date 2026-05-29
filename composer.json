@@ -22,5 +22,8 @@
         "psr-4": {
             "Modules\\CupGdocs\\": ""
         }
+    },
+    "require": {
+        "phpoffice/phpword": "^1.4"
     }
 }

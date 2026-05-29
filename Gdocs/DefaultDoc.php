@@ -14,10 +14,13 @@ abstract class DefaultDoc implements GdocsInterface {
     protected $client = null;
     protected $body = '';
     protected $dataKeys = [];
+    protected $drive = null;
 
     public function __construct($params = [])
     {
         $this->params = $params;
+        $this->drive = config('cupparis-gdocs.drive_class')[config('cupparis-gdocs.drive_type')];
+        $this->drive = new $this->drive();
     }
 
     public function setDataKeys($dK) {
@@ -28,11 +31,11 @@ abstract class DefaultDoc implements GdocsInterface {
 
     }
 
-    public function export($googleId, $filepath)
+    public function export(string $itemId, string $filepath) : void
     {
         //$this->loadData();
         $this->getClientOAuth();
-        $this->body = $this->getDocumentBody($googleId);
+        $this->body = $this->getDocumentBody($itemId);
         if (count($this->data) == 0) {
             $this->loadData();
         }
@@ -43,7 +46,7 @@ abstract class DefaultDoc implements GdocsInterface {
         $this->deleteGoogleDoc($fileTmp->id);
     }
 
-    public function exportFromHtml($body, $filepath)
+    public function exportFromHtml(string $body, string $filepath) : void
     {
         //$this->loadData();
         $this->getClientOAuth();
@@ -436,10 +439,10 @@ abstract class DefaultDoc implements GdocsInterface {
     }
 
 
-    protected function getDocumentBody($googleFileId)
+    public function getDocumentBody(string $itemId): string
     {
         $service = new \Google_Service_Drive($this->client);
-        $content = $service->files->export($googleFileId, 'text/html');
+        $content = $service->files->export($itemId, 'text/html');
         return $content->getBody();
     }
 
@@ -512,6 +515,18 @@ abstract class DefaultDoc implements GdocsInterface {
         $service->files->delete($fileId);
     }
 
+    // da mettere nel modulo gdocs
+    public function saveFromModel($filename,$itemId, $folderId = null)
+    {
+
+
+        $content = $this->drive->getDocumentBody($itemId);
+        if (count($this->data) == 0) {
+            $this->loadData();
+        }
+        //$filename = 'Contratto Ordine ' . $this->data['ordine.smart_id'] . '-Versione 1';
+        return $this->drive->saveFromModel($filename, $content, $this->data, $folderId);
+    }
 
 }
 
