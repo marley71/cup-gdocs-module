@@ -190,7 +190,8 @@ class MSGraph
             );
 
         if (!$response->successful()) {
-            dd($response->body());
+            Log::error('MSGraph getPdf error: ' . $response->body());
+            throw new \RuntimeException('Errore getPdf: ' . $response->body());
         }
 
         $pdfContent = $response->body();
@@ -220,7 +221,8 @@ class MSGraph
             );
 
         if (!$response->successful()) {
-            dd($response->body());
+            Log::error('MSGraph createFolder error: ' . $response->body());
+            throw new \RuntimeException('Errore createFolder: ' . $response->body());
         }
 
         $data = $response->json();
@@ -235,7 +237,8 @@ class MSGraph
                 $apiPath
             );
         if (!$response->successful()) {
-            dd($response->body());
+            Log::error('MSGraph getFolders error: ' . $response->body());
+            throw new \RuntimeException('Errore getFolders: ' . $response->body());
         }
         $data = $response->json();
         //print_r($data);
@@ -264,7 +267,8 @@ class MSGraph
                 "https://graph.microsoft.com/v1.0/me/drive/items/{$itemId}"
             );
         if (!$response->successful()) {
-            dd($response->body());
+            Log::error('MSGraph deleteItem error: ' . $response->body());
+            throw new \RuntimeException('Errore deleteItem: ' . $response->body());
         }
     }   
     public static function getUrl(string $itemId): string {
