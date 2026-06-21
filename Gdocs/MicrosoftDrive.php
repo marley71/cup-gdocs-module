@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Modules\CupGdocs\Contracts\IDrive;
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Settings;
 
 class MicrosoftDrive implements IDrive
 {
@@ -55,30 +56,47 @@ class MicrosoftDrive implements IDrive
     public function saveFromModel(string $name, string $template, array $data, ?string $folderId = null): string|null
     {
         Log::info("Salvataggio '$name' su Microsoft Drive");
+        Settings::setOutputEscapingEnabled(true);
         // Log::info("Template: $template");
         // Log::info(print_r($data,true));
         Log::info("FolderId: $folderId");
-        $tempPath = storage_path('app/template.docx');
+        //$tempPath = storage_path('app/template.docx');
+        $tempPath = tempnam(sys_get_temp_dir(), 'docx_tpl_');
 
         file_put_contents($tempPath, $template);
         $template = new TemplateProcessor($tempPath);
 
         foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                $template->setValue($key, $value);
-            } else {
-                $template->setValue($key, json_encode($value));
+            if (is_scalar($value) || $value === null) {
+                $template->setValue($key, (string) $value);
+            } else if (is_array($value)) {
+                foreach ($value as $k => $v) {
+                    if (is_scalar($v) || $v === null) {
+                        $template->setValue($key . '.' . $k, (string) $v);
+                    }
+                }
+                /*
+                if (is_string($value)) {
+                    $template->setValue($key, $value);
+                } else {
+                    $template->setValue($key, json_encode($value));
+                }*/
             }
+
+            
             
         }
         $filenameId = rand(1,1000000);
-        $outputPath = storage_path('app/output'.$filenameId.'.docx');
+        //$outputPath = storage_path('app/output'.$filenameId.'.docx');
+        $outputPath = tempnam(sys_get_temp_dir(), 'docx_out_') . '.docx';
+
         $template->saveAs($outputPath);
         $content = file_get_contents($outputPath);
         try {
             $result = (array)MSDrive::uploadDocxDocument($name, $content, $folderId);
             Log::info("saveFromModel: result: " . print_r($result,true));
             unlink($outputPath);
+            unlink($tempPath);
             return Arr::get( $result, 'id',null);
         } catch (\Exception $e) {
             Log::error("saveFromModel: error: " . $e->getMessage());
